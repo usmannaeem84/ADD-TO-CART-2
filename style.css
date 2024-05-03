@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@600&family=Josefin+Sans:ital,wght@1,700&family=Kalam&family=League+Spartan&family=Outfit:wght@100..900&family=Poppins:wght@500&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Outfit;
+
+}
+
+body {
+    background-color: rgb(18, 16, 16);
+    color: white;
+    overflow-x: hidden;
+}
+
+.Container {
+    display: flex;
+    justify-content: space-between;
+    /* align-items: center; */
+}
+
+.AllItems {
+    background-color: #212121;
+    color: white;
+    padding: 45px 12px;
+    height: 84vh;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.CartIcon{
+    position: absolute;
+    top: 18px;
+    right: 12px;
+    font-size: 20px;
+}
+
+.fa-xmark{
+display: none;
+}
+.Menu{
+    position: relative;
+    width: 300px;
+
+}
+.item {
+    display: flex;
+    margin: 12px 0px;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid white;
+    border-radius: 4px;
+    font-size: 18px;
+    padding: 15px 8px;
+}
+
+.AddToCart {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    color: #212121;
+    width: 260px;
+    height: 100vh;
+    font-size: 17px;
+}
+
+.cItemBox {
+    border: 2px solid #212121;
+    display: flex;
+    border-radius: 8px;
+    padding: 3px 8px;
+    justify-content: center;
+    flex-direction: column;
+    margin: 8px 0px;
+}
+
+.Citem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.QuantityBox {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    align-items: center;
+    margin-right: -8px;
+    margin: 5px 0px;
+    background-color: #212121;
+    color: white;
+    padding: 6px;
+    border-radius: 8px;
+    font-size: 13px;
+    align-self: flex-end;
+}
+
+.AddToCart .heading {
+    background-color: #212121;
+    color: aliceblue;
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.CartItems {
+    padding: 12px;
+}
+
+.totalAmount {
+    background-color: #212121;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-direction: column;
+    position: absolute;
+    bottom: 2px;
+    width: 260px;
+    height: 15vh;
+    font-size: 18px;
+
+}
+
+.totalAmount button {
+    position: relative;
+    display: inline-block;
+    padding: 5px 30px;
+    text-align: center;
+    font-size: 17px;
+    letter-spacing: 1px;
+    text-decoration: none;
+    color: #fff;
+    background: transparent;
+    cursor: pointer;
+    transition: ease-out 0.5s;
+    border: 2px solid #43b0ff;
+    border-radius: 10px;
+    width: 90%;
+    box-shadow: inset 0 0 0 0 #43b0ff;
+}
+
+.totalAmount button:hover {
+    color: white;
+    box-shadow: inset 0 -100px 0 0 #43b0ff;
+}
+
+.CartIcon{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+
+}
+.cartQuan{
+background-color: #0563ab;
+padding: 1px 5px;
+border-radius: 50%;
+display: none;
+font-size: 12px;
+}
+
+@media (max-width:799px) {
+    
+    .AddToCart{
+        display: none;
+        position: absolute;
+        right: -500px;
+        width: 300px;
+    }
+    body{
+        height: 100%;
+        overflow: hidden;
+        
+    }
+
+    .Menu{
+        width: 100%;
+        height: 100%;
+    }
+    .CartIcon{
+        display: flex;
+    }
+    .fa-xmark{
+        display: flex;
+    }
+    .totalAmount{
+        width: 100%;
+    }
+}
