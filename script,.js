@@ -1,32 +1,37 @@
-const cartItems = []
+
+
+const cartItems = [];
 let totalAmount = 0;
-const CartConatiner = document.querySelector(".AddToCart")
+const CartConatiner = document.querySelector(".AddToCart");
+
+
 
 function ClickingItem() {
-
     document.querySelectorAll(".item").forEach((MenuItem) => {
         MenuItem.addEventListener("click", (e) => {
 
-            const itemName = e.currentTarget.firstElementChild.innerHTML
+            document.querySelectorAll(".item").forEach(item => {
+                item.classList.remove("clicked");
+            });
+            e.currentTarget.classList.add("clicked");
+
+            const itemName = e.currentTarget.firstElementChild.innerHTML;
             const itemPrice = parseInt(e.currentTarget.lastElementChild.innerHTML.split("-")[0]);
             const Itemid = MenuItem.id;
-
-            AddingItem(itemName, itemPrice, Itemid)
-
-        })
-    })
-
+            AddingItem(itemName, itemPrice, Itemid);
+        });
+    });
 }
 
 
-
-
 function AddingItem(itemName, itemPrice, Itemid) {
-
-    const existingItem = cartItems.find((item) => item.id === Itemid);
+    let existingItem = cartItems.find((item) => item.id === Itemid);
 
     if (existingItem) {
-        console.log("already present");
+        existingItem.quant++;
+        existingItem.price = itemPrice * existingItem.quant;
+        updateItemDisplay(existingItem);
+        updateTotalAmount(itemPrice);
         return;
     }
 
@@ -42,109 +47,139 @@ function AddingItem(itemName, itemPrice, Itemid) {
                 <i class="fa-solid fa-minus"></i>
                 <p><b class="quantity">1</b></p>
                 <i class="fa-solid fa-plus"></i>
-                </div>
-                </div>`;
-
+            </div>
+        </div>`;
 
     cartContainer.appendChild(cItem);
-    cartItems.push({
+
+    const newItem = {
         id: Itemid,
         price: itemPrice,
-        element: cItem
-    });
+        element: cItem,
+        quant: 1,
+    };
 
+    cartItems.push(newItem);
 
+    const CartIconLogo = document.querySelector(".cartQuan");
+    CartIconLogo.style.display = "flex";
+    CartIconLogo.innerHTML = cartItems.length;
 
-const CartIconLogo = document.querySelector(".cartQuan")
-CartIconLogo.style.display="flex"
-CartIconLogo.innerHTML=cartItems.length
+    const quantityElem = cItem.querySelector(".quantity");
+    const priceElem = cItem.querySelector(".cPrice");
 
-
-
-
-    let quantityElem = cItem.querySelector(".quantity");
-    let quantityVal = parseInt(quantityElem.innerHTML);
-
-    let priceElem = cItem.querySelector(".cPrice")
-    let priceVal = parseInt(priceElem.innerHTML)
-
-
-    // Adding event listener to the plus icon
     cItem.querySelector(".fa-plus").addEventListener("click", (e) => {
         e.stopPropagation();
-        quantityVal++;
-        let totalprice = priceVal * quantityVal
-        priceElem.innerHTML = totalprice
-        quantityElem.innerHTML = quantityVal
-
-        updateTotalAmount(itemPrice)
-
+        newItem.quant++;
+        newItem.price += itemPrice;
+        updateItemDisplay(newItem);
+        updateTotalAmount(itemPrice);
     });
 
-
-    // Adding event listener to the minus icon
     cItem.querySelector(".fa-minus").addEventListener("click", (e) => {
         e.stopPropagation();
-        if (quantityVal > 0) {
-            quantityVal--;
-            totalprice = priceVal * quantityVal
-            priceElem.innerHTML = totalprice
+        if (newItem.quant > 0) {
+            newItem.quant--;
+            newItem.price -= itemPrice;
+            updateItemDisplay(newItem);
+            updateTotalAmount(-itemPrice);
         }
-        quantityElem.innerHTML = quantityVal
-
-        updateTotalAmount(itemPrice)
-
 
     });
 
 
-    updateTotalAmount(itemPrice)
-
+    updateTotalAmount(itemPrice);
 }
+
+
+function updateItemDisplay(item) {
+    item.element.querySelector(".quantity").innerHTML = item.quant;
+    item.element.querySelector(".cPrice").innerHTML = item.price;
+}
+
+
+
+
+
 
 function updateTotalAmount(priceChange) {
 
 
-    const TotalAmountBox = document.createElement("div")
     totalAmount += priceChange;
-    TotalAmountBox.innerHTML =
-        `
-    
-    <div class="totalAmount">
-                        <p >Total Amount : <span class="amount">${totalAmount} -/Rs</span></p>
-                        <button onClick="Reset()" class="Pay">Pay</button>
-                        </div>
-    
-    `
-    CartConatiner.appendChild(TotalAmountBox)
+    const TotalAmountBox = CartConatiner.querySelector(".totalAmount");
+    if (TotalAmountBox) {
+        TotalAmountBox.querySelector(".amount").textContent = `${totalAmount} -/Rs`;
+    } else {
+        const TotalAmountBox = document.createElement("div");
+        TotalAmountBox.classList.add("totalAmount");
+        TotalAmountBox.innerHTML = `
 
+        <div class="coupon">
+    <input class="couponInput" type="text">
+    <button class="Cbtn">Add Coupon</button>
+</div>
+
+            <p>Total Amount : <span class="amount">${totalAmount} -/Rs</span></p>
+            <button onClick="Reset()" class="Pay">Pay</button>`;
+        CartConatiner.appendChild(TotalAmountBox);
+
+        TotalAmountBox.querySelector(".Cbtn").addEventListener("click", () => {
+            applyCoupon();
+        });
+    }
+
+    
 }
 
 
-// mediaquery cart
-
-document.querySelector(".CartIcon").addEventListener("click",()=>{
-  const AddCart = document.querySelector(".AddToCart")
-  AddCart.style.display="flex"
-  AddCart.style.right="10px"
-  
-})
-
-document.querySelector(".fa-xmark").addEventListener("click",()=>{
-    const AddCart = document.querySelector(".AddToCart")
-    AddCart.style.right="-700px"
-    AddCart.style.display="none"
+function applyCoupon() {
+    const couponVal = document.querySelector(".couponInput").value;
     
-})
+   
+    if (couponVal.toLowerCase() === "usman84") {
+       
+        const discount = totalAmount * 0.1;
+       
+        totalAmount -= discount;
+
+       
+        const amountDisplay = document.querySelector(".amount");
+        if (amountDisplay) {
+            amountDisplay.textContent = `${totalAmount.toFixed(2)} -/Rs`;
+        }
+        
+  
+        alert("Coupon 'usman84' applied! You've received a 10% discount.");
+    } else {
+        
+        alert("Invalid coupon code.");
+       
+    }
+}
+
+
+
+
+
+document.querySelector(".CartIcon").addEventListener("click", () => {
+    const AddCart = document.querySelector(".AddToCart");
+    AddCart.style.display = "flex";
+    AddCart.style.right = "10px";
+});
+
+document.querySelector(".fa-xmark").addEventListener("click", () => {
+    const AddCart = document.querySelector(".AddToCart");
+    AddCart.style.right = "-700px";
+    AddCart.style.display = "none";
+});
+
 
 
 
 function Reset() {
-    alert("Thank you for coming sir")
+    alert("Thank you ! Your order has been placed.");
     location.reload();
 }
 
 ClickingItem();
-
-
 
