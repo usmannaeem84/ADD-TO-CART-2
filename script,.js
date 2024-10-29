@@ -136,7 +136,7 @@ function applyCoupon() {
     const couponVal = document.querySelector(".couponInput").value;
     
    
-    if (couponVal.toLowerCase() === "usman84") {
+    if (couponVal.toLowerCase() === "usman10") {
        
         const discount = totalAmount * 0.1;
        
