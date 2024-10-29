@@ -149,7 +149,7 @@ function applyCoupon() {
         }
         
   
-        alert("Coupon 'usman84' applied! You've received a 10% discount.");
+        alert("Coupon 'usman10' applied! You've received a 10% discount.");
     } else {
         
         alert("Invalid coupon code.");
