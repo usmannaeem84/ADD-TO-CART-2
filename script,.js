@@ -150,6 +150,7 @@ function applyCoupon() {
         
   
         alert("Coupon 'usman10' applied! You've received a 10% discount.");
+        couponVal=""
     } else {
         
         alert("Invalid coupon code.");
